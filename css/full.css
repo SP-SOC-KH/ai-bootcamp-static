@@ -2881,7 +2881,9 @@ html {
     grid-template-rows: 40px 1fr;
     place-items: center;
     text-align: center;
-    min-width: 4rem}
+    min-width: 4rem;
+    font-size:80%;
+}
 .swap {
     position: relative;
     display: inline-grid;
