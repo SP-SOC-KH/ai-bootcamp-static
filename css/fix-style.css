@@ -1,0 +1,9 @@
+.fix-heading{
+    font-weight: var(--inline-title-weight);
+    font-size: var(--inline-title-size);
+    font-style: var(--inline-title-style);
+    font-variant: var(--inline-title-variant);
+    font-family: var(--inline-title-font);
+    letter-spacing: -.015em;
+    color: var(--inline-title-color);
+}
