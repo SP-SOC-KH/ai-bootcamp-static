@@ -8,20 +8,45 @@ function applyTheme(mode='auto') {
 (function() {
     const STORAGE_KEY = 'theme'; // values: 'light' | 'dark' | 'auto'
     const saved = localStorage.getItem(STORAGE_KEY) || 'auto';
+
+    function createButtons() {
+        // Create the container div
+        const buttonContainer = document.createElement('div');
+        buttonContainer.style.textAlign = 'right';
+
+        // Create buttons
+        const buttons = [
+            { text: 'Auto', theme: 'auto' },
+            { text: 'Light', theme: 'light' },
+            { text: 'Dark', theme: 'dark' }
+        ];
+
+        buttons.forEach(btn => {
+            const button = document.createElement('button');
+            button.textContent = btn.text;
+            button.onclick = () => setTheme(btn.theme);
+            buttonContainer.appendChild(button);
+        });
+
+        // Find the target div
+        const targetDiv = document.querySelector('.markdown-preview-sizer.markdown-preview-section');
+        targetDiv.insertBefore(buttonContainer, targetDiv.firstChild);
+    }
     
     function init() {
-    applyTheme(saved);
+        createButtons();
+        applyTheme(saved);
 
-    // Keep in sync with system only if in 'auto'
-    function handleChange() {
-        if ((localStorage.getItem(STORAGE_KEY) || 'auto') === 'auto') {
-        applyTheme('auto');
+        // Keep in sync with system only if in 'auto'
+        function handleChange() {
+            if ((localStorage.getItem(STORAGE_KEY) || 'auto') === 'auto') {
+            applyTheme('auto');
+            }
         }
-    }
-    mq.addEventListener?.('change', handleChange);
-    if (!mq.addEventListener && mq.addListener) {
-        mq.addListener?.(handleChange); // older fallback
-    }
+        mq.addEventListener?.('change', handleChange);
+        if (!mq.addEventListener && mq.addListener) {
+            mq.addListener?.(handleChange); // older fallback
+        }
     }
 
     document.addEventListener('DOMContentLoaded', init);
@@ -36,21 +61,3 @@ function applyTheme(mode='auto') {
     };
 
 })();
-
-function setThemeIcon(theme) {
-    let toAdd;
-    switch (theme) {
-        case 'dark':
-            toRemove = ['auto', 'light'];
-            break;
-        case 'light':
-            toAdd = 'fa-adjust';
-            toRemove = ['dark', 'auto'];
-            break;
-        default:
-            toRemove = ['light', 'dark'];
-            break;
-    }
-    document.getElementById('theme-switch').classList.add(theme);
-    document.getElementById('theme-switch').classList.remove(...toRemove);
-}
